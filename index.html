@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Warung Kopi Dika | Teman Ngopi Harian</title>
+<style>
+:root{--dark:#251713;--coffee:#59392c;--cream:#f6efe5;--gold:#c89559;--text:#34251d;--muted:#75665b;--green:#16834a}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--cream);color:var(--text);line-height:1.6}
+a{color:inherit;text-decoration:none}.wrap{width:min(1120px,92%);margin:auto}
+header{position:sticky;top:0;z-index:20;background:rgba(37,23,19,.97);color:#fff;box-shadow:0 4px 20px #0002}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:15px 0;gap:20px}
+.brand{font-weight:800;font-size:1.2rem;color:#e7c08b}
+.links{display:flex;gap:24px;align-items:center;list-style:none}
+.links a:hover{color:#e7c08b}
+.cart-top{background:var(--gold);color:var(--dark);border:0;border-radius:24px;padding:10px 15px;font-weight:700;cursor:pointer}
+.hero{min-height:76vh;display:grid;align-items:center;background:linear-gradient(90deg,#211510e8 0%,#211510a8 50%,#21151025),url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1600&q=85') center/cover;color:white;padding:75px 0}
+.hero-copy{max-width:640px}.eyebrow{color:#e8bd85;text-transform:uppercase;letter-spacing:3px;font-size:.8rem;font-weight:700}
+.hero h1{font-size:clamp(2.4rem,6vw,4.5rem);line-height:1.1;margin:15px 0}
+.hero p{font-size:1.1rem;max-width:560px;color:#f1e6d9;margin-bottom:25px}
+.btn{display:inline-flex;justify-content:center;align-items:center;gap:8px;background:var(--gold);color:var(--dark);border:0;border-radius:28px;padding:12px 22px;font-weight:800;cursor:pointer;transition:.2s}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.04)}
+.btn.secondary{background:transparent;color:white;border:1px solid #fff8}.btn.small{padding:9px 14px;font-size:.9rem}
+section{padding:70px 0}.section-head{text-align:center;margin-bottom:32px}.section-head h2{font-size:2rem;color:var(--coffee)}.section-head p{color:var(--muted)}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.about img{width:100%;height:340px;object-fit:cover;border-radius:20px}
+.about h2{font-size:2rem;color:var(--coffee);margin-bottom:12px}.about p{margin-bottom:10px;color:var(--muted)}
+.menu-section{background:#eadcc9}.filters{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:0 0 28px}
+.filter{border:1px solid #bca58d;background:transparent;padding:8px 16px;border-radius:25px;cursor:pointer;color:var(--coffee)}
+.filter.active,.filter:hover{background:var(--coffee);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px}
+.card{background:white;border-radius:17px;overflow:hidden;box-shadow:0 8px 22px #4b2c1b13;transition:transform .25s}.card:hover{transform:translateY(-5px)}
+.card img{width:100%;height:210px;object-fit:cover;display:block;background:#e3d5c5}
+.card-body{padding:18px}.card h3{color:var(--coffee);margin-bottom:5px}
+.card p{font-size:.93rem;color:var(--muted);min-height:48px}
+.price-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px}
+.price{font-weight:800;color:#8c542b}.add{border:0;border-radius:50%;width:40px;height:40px;background:var(--coffee);color:#fff;font-size:1.25rem;cursor:pointer}
+.add:hover{background:var(--gold);color:var(--dark)}
+.contact{background:var(--dark);color:#fff}.contact .section-head h2{color:#e7c08b}.contact .section-head p{color:#ddd}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.contact-box{border:1px solid #ffffff20;border-radius:16px;padding:22px;background:#ffffff08}
+.contact-box h3{color:#e7c08b;margin-bottom:8px}.contact-box p{color:#eee}.contact-box .btn{margin-top:12px}
+footer{padding:25px 0;text-align:center;background:#180f0c;color:#cbbdb2;font-size:.9rem}
+.wa-float{position:fixed;bottom:20px;right:20px;z-index:30;background:#25d366;color:#073b1b;padding:14px 18px;border-radius:40px;font-weight:800;box-shadow:0 5px 20px #0003;text-decoration:none}
+.wa-float:hover{background:#1fb855;color:#fff}
+.cart-panel{position:fixed;inset:0;background:#0007;z-index:40;display:none;justify-content:flex-end}.cart-panel.open{display:flex}
+.cart{background:#fff;width:min(440px,100%);height:100%;padding:24px;overflow:auto;box-shadow:-10px 0 30px #0002}
+.cart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.close{border:0;background:#eee;border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:1.2rem}
+.cart-list{display:grid;gap:12px}.cart-line{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid #eee;padding:12px 0}
+.cart-line small{display:block;color:var(--muted)}.qty{display:flex;align-items:center;gap:8px}
+.qty button{border:0;background:#eadcc9;width:28px;height:28px;border-radius:50%;cursor:pointer}
+.cart-total{margin:22px 0;font-size:1.15rem;font-weight:800;display:flex;justify-content:space-between}
+.checkout{width:100%;background:var(--green);color:white}.checkout:hover{background:#126e3d}
+.empty{color:var(--muted);text-align:center;padding:35px 10px}
+.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%);background:var(--dark);color:#fff;padding:12px 18px;border-radius:24px;display:none;z-index:60}
+@media(max-width:700px){.links{gap:12px;font-size:.9rem}.nav{flex-wrap:wrap}.hero{min-height:65vh;padding:50px 0}.about{grid-template-columns:1fr}.about img{height:260px}section{padding:52px 0}}
+@media(max-width:430px){.links{width:100%;justify-content:space-between}.brand{font-size:1.05rem}.cart-top{padding:8px 12px}}
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+<a class="brand" href="#home">☕ WARUNG KOPI DIKA</a>
+<ul class="links">
+  <li><a href="#home">Beranda</a></li>
+  <li><a href="#about">Tentang</a></li>
+  <li><a href="#menu">Menu</a></li>
+  <li><a href="#contact">Kontak</a></li>
+</ul>
+<button class="cart-top" onclick="openCart()">🛒 Keranjang <span id="cartCount">0</span></button>
+</div></header>
+
+<main>
+<section class="hero" id="home">
+  <div class="wrap hero-copy">
+    <div class="eyebrow">Teman ngopi setiap hari</div>
+    <h1>Secangkir hangat,<br>suasana jadi dekat.</h1>
+    <p>Kopi, minuman favorit, dan waktu santai. Pilih menu kesukaanmu, masukkan ke keranjang, lalu pesan langsung lewat WhatsApp.</p>
+    <a class="btn" href="#menu">Jelajahi Menu ↓</a>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about">
+    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=85" alt="Biji dan racikan kopi" loading="lazy">
+    <div>
+      <div class="eyebrow">Tentang kami</div>
+      <h2>Rasa yang sederhana, dibuat sepenuh hati.</h2>
+      <p>Warung Kopi Dika hadir untuk menemani obrolan, waktu istirahat, dan hari-harimu. Kami menyajikan pilihan kopi dan minuman yang nyaman dinikmati kapan saja.</p>
+      <p>Temukan menu favoritmu dan pesan dengan mudah melalui WhatsApp.</p>
+      <a class="btn" href="#menu">Lihat pilihan menu</a>
+    </div>
+  </div>
+</section>
+
+<section class="menu-section" id="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Menu Favorit</h2>
+      <p>Pilih minuman dan tambahkan ke keranjangmu.</p>
+    </div>
+    <div class="filters">
+      <button class="filter active" onclick="filterMenu('all',this)">Semua</button>
+      <button class="filter" onclick="filterMenu('coffee',this)">Kopi</button>
+      <button class="filter" onclick="filterMenu('noncoffee',this)">Non-kopi</button>
+    </div>
+    <div class="grid" id="menuGrid">
+      
+      <!-- KOPI -->
+      <div class="card" data-category="coffee">
+        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=700&q=85" alt="Kopi Tubruk" loading="lazy">
+        <div class="card-body">
+          <h3>Kopi Tubruk</h3>
+          <p>Kopi hitam klasik dengan aroma kuat dan cita rasa khas.</p>
+          <div class="price-row">
+            <span class="price">Rp 8.000</span>
+            <button class="add" onclick="addToCart('Kopi Tubruk',8000)" aria-label="Tambah Kopi Tubruk">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-category="coffee">
+        <img src="https://images.unsplash.com/photo-1485808191679-5f86510681a2?auto=format&fit=crop&w=700&q=85" alt="Kopi Susu Gula Aren" loading="lazy">
+        <div class="card-body">
+          <h3>Kopi Susu Gula Aren</h3>
+          <p>Kopi, susu creamy, dan manis legit gula aren.</p>
+          <div class="price-row">
+            <span class="price">Rp 15.000</span>
+            <button class="add" onclick="addToCart('Kopi Susu Gula Aren',15000)" aria-label="Tambah Kopi Susu Gula Aren">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-category="coffee">
+        <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=700&q=85" alt="Cappuccino" loading="lazy">
+        <div class="card-body">
+          <h3>Cappuccino</h3>
+          <p>Espresso dan foam susu lembut dengan rasa seimbang.</p>
+          <div class="price-row">
+            <span class="price">Rp 18.000</span>
+            <button class="add" onclick="addToCart('Cappuccino',18000)" aria-label="Tambah Cappuccino">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-category="coffee">
+        <img src="https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?auto=format&fit=crop&w=700&q=85" alt="Latte" loading="lazy">
+        <div class="card-body">
+          <h3>Latte</h3>
+          <p>Espresso dengan susu yang lembut dan creamy.</p>
+          <div class="price-row">
+            <span class="price">Rp 17.000</span>
+            <button class="add" onclick="addToCart('Latte',17000)" aria-label="Tambah Latte">+</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- NON-KOPI - Gambar diperbaiki -->
+      <div class="card" data-category="noncoffee">
+        <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=700&q=85" alt="Cokelat Hangat" loading="lazy">
+        <div class="card-body">
+          <h3>Cokelat Hangat</h3>
+          <p>Cokelat manis dan hangat, pilihan tanpa kopi.</p>
+          <div class="price-row">
+            <span class="price">Rp 12.000</span>
+            <button class="add" onclick="addToCart('Cokelat Hangat',12000)" aria-label="Tambah Cokelat Hangat">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-category="noncoffee">
+        <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=700&q=85" alt="Teh Tarik" loading="lazy">
+        <div class="card-body">
+          <h3>Teh Manis Es</h3>
+          <p>Teh susu yang ditarik hingga berbusa dan terasa nikmat.</p>
+          <div class="price-row">
+            <span class="price">Rp 10.000</span>
+            <button class="add" onclick="addToCart('Teh Tarik',10000)" aria-label="Tambah Teh Tarik">+</button>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Pesan & Hubungi Kami</h2>
+      <p>Pesananmu akan diteruskan ke WhatsApp untuk konfirmasi.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-box">
+        <h3>📲 Pesan lewat WhatsApp</h3>
+        <p>Tekan tombol untuk chat dan tanya menu atau pesanan.</p>
+        <a class="btn" href="https://wa.me/6289508678145?text=Halo%20Warung%20Kopi%20Dika%2C%20saya%20ingin%20bertanya." target="_blank" rel="noopener">Chat WhatsApp</a>
+      </div>
+      <div class="contact-box">
+        <h3>📍 Lokasi</h3>
+        <p>Alamat yang tercantum di situs perlu dikonfirmasi sebelum kunjungan.</p>
+        <a class="btn secondary" href="https://www.google.com/maps/search/?api=1&query=Warung+Kopi+Dika+Tangerang" target="_blank" rel="noopener">Cari di Maps</a>
+      </div>
+      <div class="contact-box">
+        <h3>🕒 Jam operasional</h3>
+        <p>Senin–Jumat: 07.00–22.00<br>Sabtu–Minggu: Libur</p>
+        <p style="font-size:.8rem;color:#cfc3b9">Jam buka dapat berubah.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 Warung Kopi Dika · Dibuat untuk menemani harimu</div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/6289508678145?text=Halo%20Warung%20Kopi%20Dika%2C%20saya%20ingin%20memesan." target="_blank" rel="noopener">WhatsApp ↗</a>
+
+<div class="cart-panel" id="cartPanel" onclick="outsideClose(event)">
+  <div class="cart">
+    <div class="cart-header">
+      <h2>🛒 Keranjang Pesanan</h2>
+      <button class="close" onclick="closeCart()">×</button>
+    </div>
+    <div class="cart-list" id="cartList"></div>
+    <div class="cart-total">
+      <span>Total</span>
+      <span id="cartTotal">Rp 0</span>
+    </div>
+    <button class="btn checkout" onclick="checkout()">Pesan via WhatsApp</button>
+    <p style="color:#777;font-size:.85rem;margin-top:12px">Pesanan akan dibuka di WhatsApp untuk konfirmasi. Ongkir dan detail pesanan dibicarakan langsung.</p>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+
+const cart = Object.create(null);
+const WHATSAPP_NUMBER = '6289508678145';
+const fmt = (amount) => 'Rp ' + Number(amount || 0).toLocaleString('id-ID');
+
+function getCartItems() {
+  return Object.entries(cart).filter(([, item]) => item && item.qty > 0);
+}
+
+function addToCart(name, price) {
+  const safeName = String(name || '').trim();
+  const safePrice = Number(price);
+
+  if (!safeName || !Number.isFinite(safePrice) || safePrice <= 0) {
+    toast('Menu tidak valid. Silakan coba lagi.');
+    return;
+  }
+
+  if (!cart[safeName]) cart[safeName] = { price: safePrice, qty: 0 };
+  cart[safeName].qty += 1;
+
+  updateCart();
+  toast(safeName + ' ditambahkan ke keranjang');
+}
+
+function changeQty(name, amount) {
+  if (!Object.prototype.hasOwnProperty.call(cart, name)) return;
+
+  const nextQty = cart[name].qty + Number(amount);
+  if (nextQty <= 0) {
+    delete cart[name];
+  } else {
+    cart[name].qty = nextQty;
+  }
+  updateCart();
+}
+
+function updateCart() {
+  const items = getCartItems();
+  const count = items.reduce((sum, [, item]) => sum + item.qty, 0);
+  const total = items.reduce((sum, [, item]) => sum + item.price * item.qty, 0);
+
+  document.getElementById('cartCount').textContent = count;
+  document.getElementById('cartTotal').textContent = fmt(total);
+
+  const list = document.getElementById('cartList');
+  list.replaceChildren();
+
+  if (items.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'empty';
+    empty.append('Keranjang masih kosong.');
+    empty.appendChild(document.createElement('br'));
+    empty.append('Yuk pilih minuman favoritmu ☕');
+    list.appendChild(empty);
+    return;
+  }
+
+  items.forEach(([name, item]) => {
+    const row = document.createElement('div');
+    row.className = 'cart-line';
+
+    const info = document.createElement('div');
+    const title = document.createElement('b');
+    title.textContent = name;
+    const detail = document.createElement('small');
+    detail.textContent = fmt(item.price) + ' / item';
+    info.append(title, detail);
+
+    const qty = document.createElement('div');
+    qty.className = 'qty';
+
+    const minus = document.createElement('button');
+    minus.type = 'button';
+    minus.textContent = '−';
+    minus.setAttribute('aria-label', 'Kurangi ' + name);
+    minus.addEventListener('click', () => changeQty(name, -1));
+
+    const amount = document.createElement('b');
+    amount.textContent = item.qty;
+
+    const plus = document.createElement('button');
+    plus.type = 'button';
+    plus.textContent = '+';
+    plus.setAttribute('aria-label', 'Tambah ' + name);
+    plus.addEventListener('click', () => changeQty(name, 1));
+
+    qty.append(minus, amount, plus);
+    row.append(info, qty);
+    list.appendChild(row);
+  });
+}
+
+function openCart() {
+  document.getElementById('cartPanel').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCart() {
+  document.getElementById('cartPanel').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function outsideClose(event) {
+  if (event.target && event.target.id === 'cartPanel') closeCart();
+}
+
+function checkout() {
+  const items = getCartItems();
+  if (items.length === 0) {
+    toast('Keranjang masih kosong. Pilih menu terlebih dahulu.');
+    return;
+  }
+
+  const total = items.reduce((sum, [, item]) => sum + item.price * item.qty, 0);
+  const lines = items.map(([name, item]) =>
+    `- ${name} x${item.qty} = ${fmt(item.price * item.qty)}`
+  );
+
+  const message = [
+    'Halo Warung Kopi Dika, saya ingin memesan:',
+    '',
+    ...lines,
+    '',
+    `Total: ${fmt(total)}`,
+    '',
+    'Mohon konfirmasi pesanan saya. Terima kasih.'
+  ].join('\n');
+
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  const opened = window.open(url, '_blank', 'noopener,noreferrer');
+
+  // Fallback untuk browser yang memblokir tab baru.
+  if (!opened) window.location.href = url;
+}
+
+let toastTimer;
+function toast(message) {
+  const el = document.getElementById('toast');
+  el.textContent = message;
+  el.style.display = 'block';
+  window.clearTimeout(toastTimer);
+  toastTimer = window.setTimeout(() => {
+    el.style.display = 'none';
+  }, 2200);
+}
+
+function filterMenu(category, button) {
+  document.querySelectorAll('#menuGrid .card').forEach((card) => {
+    card.style.display =
+      category === 'all' || card.dataset.category === category ? '' : 'none';
+  });
+
+  document.querySelectorAll('.filters .filter').forEach((filter) => {
+    filter.classList.toggle('active', filter === button);
+  });
+}
+
+// Pastikan tampilan keranjang benar sejak halaman pertama dibuka.
+document.addEventListener('DOMContentLoaded', updateCart);
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeCart();
+});
+</script>
+</body>
+</html>
